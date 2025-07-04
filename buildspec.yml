@@ -6,13 +6,15 @@ phases:
       java: corretto21
   build:
     commands:
-      - echo "Building Spring Boot app..."
+      - echo "Building Spring Boot JAR..."
       - mvn clean package -DskipTests
       - cp target/AWS-Deploy.jar application.jar
+      - echo "web: java -jar application.jar" > Procfile
   post_build:
     commands:
-      - echo "Zipping deployment package..."
-      - zip AWS-Deploy.zip application.jar
+      - echo "Zipping required files for Elastic Beanstalk..."
+      - zip -r AWS-Deploy.zip application.jar Procfile
+      - unzip -l AWS-Deploy.zip  # DEBUG: show what's in the zip
 
 artifacts:
   files:
