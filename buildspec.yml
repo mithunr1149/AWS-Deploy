@@ -4,21 +4,17 @@ phases:
   install:
     runtime-versions:
       java: corretto21
-  pre_build:
-    commands:
-      - echo "Java version:"
-      - java -version
-      - echo "Cleaning previous builds..."
-      - mvn clean
   build:
     commands:
-      - echo "Building the Spring Boot JAR..."
-      - mvn package -DskipTests
+      - echo "Building Spring Boot App..."
+      - mvn clean package -DskipTests
+      - mkdir -p build
+      - cp target/AWS-Deploy.jar build/application.jar
   post_build:
     commands:
-      - echo "Build completed successfully."
+      - echo "Zipping deployment package..."
+      - zip -r AWS-Deploy.zip build/
 
 artifacts:
   files:
-    - target/AWS-Deploy.jar
-  discard-paths: yes
+    - AWS-Deploy.zip
