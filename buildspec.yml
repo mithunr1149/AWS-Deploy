@@ -4,18 +4,16 @@ phases:
   install:
     runtime-versions:
       java: corretto21
+    commands:
+      - echo Installing Maven...
+      - yum install -y maven
+
   build:
     commands:
-      - echo "Building Spring Boot JAR..."
-      - mvn clean package -DskipTests
-      - cp target/AWS-Deploy.jar application.jar
-      - echo "web: java -jar application.jar" > Procfile
-  post_build:
-    commands:
-      - echo "Zipping required files for Elastic Beanstalk..."
-      - zip -r AWS-Deploy.zip application.jar Procfile
-      - unzip -l AWS-Deploy.zip  # DEBUG: show what's in the zip
+      - echo Build started on `date`
+      - mvn clean package
 
 artifacts:
   files:
-    - AWS-Deploy.zip
+    - target/AWS-Deploy.jar
+  discard-paths: yes
