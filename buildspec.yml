@@ -6,14 +6,13 @@ phases:
       java: corretto21
   build:
     commands:
-      - echo "Building Spring Boot App..."
+      - echo "Building Spring Boot app..."
       - mvn clean package -DskipTests
-      - mkdir -p build
-      - cp target/AWS-Deploy.jar build/application.jar
+      - cp target/AWS-Deploy.jar application.jar
   post_build:
     commands:
       - echo "Zipping deployment package..."
-      - zip -r AWS-Deploy.zip build/
+      - zip AWS-Deploy.zip application.jar
 
 artifacts:
   files:
