@@ -3,16 +3,22 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto17
+      java: corretto21
+  pre_build:
+    commands:
+      - echo "Java version:"
+      - java -version
+      - echo "Cleaning previous builds..."
+      - mvn clean
   build:
     commands:
-      - echo Packaging JAR file...
-      - mvn clean package -DskipTests
+      - echo "Building the Spring Boot JAR..."
+      - mvn package -DskipTests
   post_build:
     commands:
-      - echo Build complete.
+      - echo "Build completed successfully."
 
 artifacts:
   files:
-    - target/AWS_Deploy-0.0.1-SNAPSHOT.jar
+    - target/AWS-Deploy.jar
   discard-paths: yes

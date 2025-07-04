@@ -80,6 +80,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>AWS-Deploy</finalName>
 	</build>
-
 </project>
